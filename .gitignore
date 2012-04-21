@@ -1,0 +1,4 @@
+*.swf
+bin
+doc
+test-reports

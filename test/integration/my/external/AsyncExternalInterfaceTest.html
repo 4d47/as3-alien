@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<title>AsyncExternalInterfaceTest</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+		<script type="text/javascript">
+
+			// asynchronously calculating the double value of a number.
+			function double(num, fn) {
+				fn(num * 2);
+			}
+
+			function endTest(isSuccess) {
+				document.getElementById('banner').style.backgroundColor = isSuccess ? 'green' : 'red';
+			}
+
+			function start() {
+				swfobject.embedSWF('AsyncExternalInterfaceTest.swf', 'Test', '590', '170', '11', {}, {}, { name: 'Test' } )
+				document.getElementById('banner').style.backgroundColor = 'gray'
+			}
+		</script>
+	</head>
+	<body onload="start()">
+		<div id="banner" style="width:100%; height:20px; border:1px solid gray;"></div>
+		<div id="Test"></div>
+	</body>
+</html>
