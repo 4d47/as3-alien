@@ -2,62 +2,47 @@ package {
     import flash.display.Sprite;
     import flash.external.ExternalInterface;
     import flash.events.UncaughtErrorEvent;
-    import flash.system.Security;
 
     import my.external.AsyncExternalInterface;
+    import my.external.FBProxy;
   
     public class AsyncExternalInterfaceTest extends Sprite {
+
         public function AsyncExternalInterfaceTest() {
+            // make sure we see exceptions
             ExternalInterface.marshallExceptions = true;
             loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, fail);
-            first();
+            // eg. call the browser setTimeout function
+            var id:uint = AsyncExternalInterface.call('setTimeout', onSetTimeout, 200);
         }
 
-        private function first():void {
-            AsyncExternalInterface.call('double', 10, second);
+        private function onSetTimeout(lateness:* = null):void {
+            // initialize the proxy (the js sdk will be loaded in the html)
+            FB = new FBProxy(facebookLoaded);
         }
 
-        private function second(num:Number):void {
-            if (num !== 20)
-                fail();
-            AsyncExternalInterface.call(LOAD_SDK_SCRIPT, third);
+        private function facebookLoaded():void {
+            // now feel like using FB js object.
+            FB.api(FACEBOOK_PLATFORM_ID, onResult);
         }
 
-        private function third():void {
-            AsyncExternalInterface.call('FB.api', FACEBOOK_PLATFORM_ID, fourth);
-        }
-
-        private function fourth(data:Object):void {
+        private function onResult(data:Object):void {
             if (data.id !== FACEBOOK_PLATFORM_ID)
-                fail();
-            if (!(this is AsyncExternalInterfaceTest))
-                fail();
-            success();
+                throw new Error("Received an object but not with the expected id.");
+            // eg. calling nested objects
+            FB.Event.subscribe('auth.authResponseChange', onAuthResponseChange);
+            ExternalInterface.call('endTest', true);
+        }
+
+        private function onAuthResponseChange(response:Object):void {
+            trace('The auth response changed');
         }
 
         private function fail(e:UncaughtErrorEvent = null):void {
             ExternalInterface.call('endTest', false);
         }
 
-        private function success():void {
-            ExternalInterface.call('endTest', true);
-        }
-
+        private var FB:FBProxy;
         private static const FACEBOOK_PLATFORM_ID:String = '19292868552';
-
-        private static const LOAD_SDK_SCRIPT:XML =
-            // http://developers.facebook.com/docs/reference/javascript
-            <script>
-                <![CDATA[
-                    function(fn) {
-                        window.fbAsyncInit = fn;
-                        var js, id = 'facebook-jssdk', ref = document.getElementsByTagName('script')[0];
-                        if (document.getElementById(id)) { return; }
-                        js = document.createElement('script'); js.id = id; js.async = true;
-                        js.src = "//connect.facebook.net/en_US/all.js";
-                        ref.parentNode.insertBefore(js, ref);
-                    }
-                ]]>
-            </script>;
     }
 }

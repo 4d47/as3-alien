@@ -17,8 +17,8 @@ package my.external {
      */
     public final class AsyncExternalInterface {
 
-        public static function call(functionName:String, ... args):void {
-            ExternalInterface.call(subroutine(functionName, args.map(convertArgument).join()));
+        public static function call(functionName:String, ... args):* {
+            return ExternalInterface.call(subroutine(functionName, args.map(convertArgument).join()));
         }
 
         public static function get available():Boolean {
@@ -56,7 +56,7 @@ package my.external {
 
         private static function subroutine(func:String, ...args):String {
             // we wrap the func in parentheses to allow either function name or expression
-            return 'function(){(' + func + ')(' + args.join() + ')}';
+            return 'function(){ return (' + func + ')(' + args.join() + ')}';
         }
 
         private static function registeredCallbackID(fn:Function):int {
