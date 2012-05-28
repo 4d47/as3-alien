@@ -1,11 +1,11 @@
 package my.external {
     import org.flexunit.Assert;
 
-    public class AsyncExternalInterafceTest {
+    public class AsyncExternalInterfaceTest {
         [Test]
-	public function canInstanciate():void {
-            new AsyncExternalInterafceTest();
-	}
+        public function canInstanciate():void {
+            new AsyncExternalInterface();
+        }
 
         [Test]
         public function unavailableToUnitTest():void {
