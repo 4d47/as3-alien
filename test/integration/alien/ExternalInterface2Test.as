@@ -3,17 +3,17 @@ package {
     import flash.external.ExternalInterface;
     import flash.events.UncaughtErrorEvent;
 
-    import my.external.AsyncExternalInterface;
-    import my.external.FBProxy;
+    import alien.ExternalInterface2;
+    import alien.FBProxy;
   
-    public class AsyncExternalInterfaceTest extends Sprite {
+    public class ExternalInterface2Test extends Sprite {
 
-        public function AsyncExternalInterfaceTest() {
+        public function ExternalInterface2Test() {
             // make sure we see exceptions
             ExternalInterface.marshallExceptions = true;
             loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, fail);
             // eg. call the browser setTimeout function
-            var id:uint = AsyncExternalInterface.call('setTimeout', onSetTimeout, 200);
+            var id:uint = ExternalInterface2.call('setTimeout', onSetTimeout, 200);
         }
 
         private function onSetTimeout(lateness:* = null):void {

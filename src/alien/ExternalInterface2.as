@@ -4,7 +4,7 @@
  * You have a sunshine.
  */
 
-package my.external {
+package alien {
     import flash.external.ExternalInterface;
     import com.adobe.serialization.json.JSON;
 
@@ -15,7 +15,7 @@ package my.external {
      * @see http://stackoverflow.com/questions/3802638/pass-a-callback-in-externalinterface
      * @see http://help.adobe.com/en_US/as3/dev/WS5b3ccc516d4fbf351e63e3d118a9b90204-7cb2.html#WS5b3ccc516d4fbf351e63e3d118a9b90204-7ca8
      */
-    public final class AsyncExternalInterface {
+    public final class ExternalInterface2 {
 
         public static function call(functionName:String, ... args):* {
             return ExternalInterface.call(subroutine(functionName, args.map(convertArgument).join()));
@@ -70,7 +70,7 @@ package my.external {
         }
 
         private static var registeredCallbacks:Array = []; // todo: consider using Dictionary(true) for weak references
-        private static const INTERFACE_CALLBACK_NAME:String = 'AsyncExternalInterfaceCallback';
+        private static const INTERFACE_CALLBACK_NAME:String = 'ExternalInterface2';
         private static const INTERFACE_CALLBACK_FN:String = 'document.getElementById("' + ExternalInterface.objectID + '").' + INTERFACE_CALLBACK_NAME
 
         {

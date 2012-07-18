@@ -1,4 +1,4 @@
-package my.external {
+package alien {
     import flash.utils.Proxy;
     import flash.utils.flash_proxy;
 
@@ -13,12 +13,12 @@ package my.external {
         public function FBProxy(ready:Function = null, prefix:String = 'FB') {
             this.prefix = prefix + '.';
             if (ready != null)
-                AsyncExternalInterface.call(LOAD_SDK_SCRIPT, ready);
+                ExternalInterface2.call(LOAD_SDK_SCRIPT, ready);
         }
 
         override flash_proxy function callProperty(name:*, ...args):* {
             args.unshift(prefix + name);
-            return AsyncExternalInterface.call.apply(null, args);
+            return ExternalInterface2.call.apply(null, args);
         }
 
         override flash_proxy function getProperty(name:*):* {

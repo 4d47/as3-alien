@@ -1,20 +1,20 @@
-package my.external {
+package alien {
     import org.flexunit.Assert;
 
-    public class AsyncExternalInterfaceTest {
+    public class ExternalInterface2Test {
         [Test]
         public function canInstanciate():void {
-            new AsyncExternalInterface();
+            new ExternalInterface2();
         }
 
         [Test]
         public function unavailableToUnitTest():void {
-            Assert.assertFalse( AsyncExternalInterface.available );
+            Assert.assertFalse( ExternalInterface2.available );
         }
 
         [Test(expects="Error", description="Not available")]
         public function callWithNull():void {
-            AsyncExternalInterface.call(null);
+            ExternalInterface2.call(null);
         }
     }
 }
