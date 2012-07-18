@@ -10,8 +10,13 @@ as3-alien
 
 `alien.FBProxy`, a small `flash.utils.Proxy` to feel like directly using Facebook JavaScript SDK.
 
-    var FB:FBProxy = new FBProxy();
+    // instanciate the proxy, loading javascript sdk in the page
+    var FB:FBProxy = new FBProxy(onInit);
+
+    // javascript is ready, using it thru as3
+    private function onInit():void {
 	FB.api('me', function():void {
 	    // ...
 	});
+    }
 
