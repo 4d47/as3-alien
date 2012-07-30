@@ -27,19 +27,19 @@ package alien {
 
         // Convert argument value to a JavaScript string value;
         // substituting functions with a proxying JavaScript function.
-        private static function convertArgument(value:*, index:int = 0, arr:Array = null):String {
+        internal static function convertArgument(value:*, index:int = 0, arr:Array = null):String {
             if (value is Function)
                 return javaScriptCallback(value);
             else if (isRawValue(value))
                 return com.adobe.serialization.json.JSON.encode(value);
             else if (value is Array)
-                return '[' + value.each(convertArgument).join() + ']';
+                return '[' + value.map(convertArgument).join() + ']';
             else {
                 var str:String = '';
                 for (var prop:String in value) {
                     if (str.length > 0)
                         str += ',';
-                    str += prop + ':' + convertArgument(value[prop]);
+                    str += convertArgument(prop) + ':' + convertArgument(value[prop]);
                 }
                 return '{' + str + '}'
             }
@@ -69,9 +69,9 @@ package alien {
             registeredCallbacks[callbackID].apply(null, args);
         }
 
-        private static var registeredCallbacks:Array = []; // todo: consider using Dictionary(true) for weak references
-        private static const INTERFACE_CALLBACK_NAME:String = 'ExternalInterface2';
-        private static const INTERFACE_CALLBACK_FN:String = 'document.getElementById("' + ExternalInterface.objectID + '").' + INTERFACE_CALLBACK_NAME
+        internal static var registeredCallbacks:Array = []; // todo: consider using Dictionary(true) for weak references
+        internal static const INTERFACE_CALLBACK_NAME:String = 'ExternalInterface2';
+        internal static const INTERFACE_CALLBACK_FN:String = 'document.getElementById("' + ExternalInterface.objectID + '").' + INTERFACE_CALLBACK_NAME
 
         {
             if (available)
