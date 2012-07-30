@@ -1,4 +1,4 @@
 *.swf
 bin
-doc
+asdoc
 test-reports
