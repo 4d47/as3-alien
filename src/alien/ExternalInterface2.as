@@ -17,16 +17,30 @@ package alien {
      */
     public final class ExternalInterface2 {
 
+        /**
+         * <b>Warning:</b> Once external, Function references can never be freed from memory.
+         * That's because you never know when JavaScript will be calling them;
+         * so when using this, reuse Function references and avoid closures.
+         *
+         * @see flash.external.ExternalInterface#call()
+         */
         public static function call(functionName:String, ... args):* {
             return ExternalInterface.call(subroutine(functionName, args.map(convertArgument).join()));
         }
 
+        /**
+         * @see flash.external.ExternalInterface#available
+         */
         public static function get available():Boolean {
             return ExternalInterface.available;
         }
 
-        // Convert argument value to a JavaScript string value;
-        // substituting functions with a proxying JavaScript function.
+        /**
+         * Convert argument value to a JavaScript string value;
+         * substituting functions with a proxying JavaScript function.
+         *
+         * @private
+         */
         internal static function convertArgument(value:*, index:int = 0, arr:Array = null):String {
             if (value is Function)
                 return javaScriptCallback(value);
@@ -69,8 +83,11 @@ package alien {
             registeredCallbacks[callbackID].apply(null, args);
         }
 
-        internal static var registeredCallbacks:Array = []; // todo: consider using Dictionary(true) for weak references
+        /** @private */
+        internal static var registeredCallbacks:Array = [];
+        /** @private */
         internal static const INTERFACE_CALLBACK_NAME:String = 'ExternalInterface2';
+        /** @private */
         internal static const INTERFACE_CALLBACK_FN:String = 'document.getElementById("' + ExternalInterface.objectID + '").' + INTERFACE_CALLBACK_NAME
 
         {
