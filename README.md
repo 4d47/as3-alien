@@ -2,7 +2,7 @@
 as3-alien
 =========
 
-" This is beyond external, this is alien "
+" This hack is beyond external, it's alien "
 
 `alien.ExternalInterface2` is just like `flash.external.ExternalInterface`
 except arguments can be `Function` that will be called back.
@@ -17,8 +17,8 @@ you feel like directly using the Facebook JavaScript SDK from ActionScript.
 
     // javascript is ready, using it thru as3
     private function onInit():void {
-	FB.api('me', function():void {
-	    // ...
-	});
+        FB.api('me', function():void {
+            // ...
+        });
     }
 
