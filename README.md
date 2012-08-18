@@ -2,6 +2,8 @@
 as3-alien
 =========
 
+![An AS3 Monster for going external](http://mathieu.gagnon.name/random/alien.jpg)
+
 " This hack is beyond external, it's alien "
 
 `alien.ExternalInterface2` is just like `flash.external.ExternalInterface`
