@@ -14,13 +14,9 @@ except arguments can be `Function` that will be called back.
 `alien.FBProxy`, a thin `flash.utils.Proxy` using ExternalInterface2 that makes
 you feel like directly using the Facebook JavaScript SDK from ActionScript.
 
-    // instanciate the proxy, loading javascript sdk in the page
-    private var FB:FBProxy = new FBProxy(onInit);
+    var FB:FBProxy = new FBProxy();
 
-    // javascript is ready, using it thru as3
-    private function onInit():void {
-        FB.api('me', function():void {
-            // ...
-        });
-    }
+    FB.api('me', function(data:Object):void {
+        // ...
+    });
 
