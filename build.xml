@@ -1,6 +1,6 @@
 <project default="all">
     <property name="project.name" value="alien" />
-    <property name="project.version" value="0.0.1" />
+    <property name="project.version" value="0.0.2-pre" />
     <property name="test" value="test/unit" />
     <import file="build/build.xml" />
 
