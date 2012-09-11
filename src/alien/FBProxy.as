@@ -1,6 +1,4 @@
 package alien {
-    import flash.utils.Proxy;
-    import flash.utils.flash_proxy;
 
     /**
      * Facebook JavaScript SDK Proxy.
@@ -8,29 +6,17 @@ package alien {
      *
      * @see http://developers.facebook.com/docs/reference/javascript/
      */
-    public dynamic class FBProxy extends Proxy {
+    public dynamic class FBProxy extends JSProxy {
 
         /**
          * @param fbAsyncInit Function called as soon as the SDK is loaded.
          * @param isBeta Flag telling to load the beta tier version.
-         * @param prefix Internal SDK name in the JavaScript interface.
          */
-        public function FBProxy(fbAsyncInit:Function = null, isBeta:Boolean = false, prefix:String = 'FB') {
-            this.prefix = prefix + '.';
+        public function FBProxy(fbAsyncInit:Function = null, isBeta:Boolean = false) {
+            super('FB');
             if (fbAsyncInit != null)
                 ExternalInterface2.call(LOAD_SDK_SCRIPT, isBeta, fbAsyncInit);
         }
-
-        override flash_proxy function callProperty(name:*, ...args):* {
-            args.unshift(prefix + name);
-            return ExternalInterface2.call.apply(null, args);
-        }
-
-        override flash_proxy function getProperty(name:*):* {
-            return new FBProxy(null, false, prefix + name)
-        }
-
-        private var prefix:String;
 
         private static const LOAD_SDK_SCRIPT:XML =
             // http://developers.facebook.com/docs/reference/javascript
