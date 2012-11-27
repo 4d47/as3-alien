@@ -12,7 +12,7 @@ except arguments can be `Function` that will be called back.
     ExternalInterface2.call("window.setInterval", onSetInterval, 3000);
 
 `alien.FBProxy`, a thin `flash.utils.Proxy` using ExternalInterface2 that makes
-you feel like directly using the Facebook JavaScript SDK from ActionScript.
+you feel like directly using the [Facebook JavaScript SDK][FB] from ActionScript.
 
     var FB:FBProxy = new FBProxy();
 
@@ -20,3 +20,4 @@ you feel like directly using the Facebook JavaScript SDK from ActionScript.
         // ...
     });
 
+[FB]: http://developers.facebook.com/docs/reference/javascript/
